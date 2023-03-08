@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Speaking text</title>
+	<script>
+		function speak() {
+			var text = document.getElementById("text-to-speak").value;
+			var msg = new SpeechSynthesisUtterance(text);
+			window.speechSynthesis.speak(msg);
+		}
+	</script>
+</head>
+<body>
+	<h1>Speaking text</h1>
+	<label for="text-to-speak">Enter text to speak:</label>
+	<textarea id="text-to-speak" rows="4" cols="50"></textarea>
+	<button onclick="speak()">Speak</button>
+</body>
+</html>
