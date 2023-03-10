@@ -7,7 +7,14 @@
 <body>
     <h1>Wealth Advisor Persona</h1>
     <p>A financial professional who helps clients achieve their financial goals and create a solid financial plan for their future.</p>
-
+//persona
+ const questionInput = document.getElementById('question');
+const submitButton = document.getElementById('submit');
+const endButton = document.getElementById('end');
+const responseDiv = document.getElementById('response');
+const dossierList = document.getElementById('dossier');
+let context = ' world board of wealth advisory, known for priority of conversion. ';
+let dossier = [];
 
 //engine
 function generateAnswer(question) {
