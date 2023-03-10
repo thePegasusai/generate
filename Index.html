@@ -8,6 +8,50 @@
     <h1>Wealth Advisor Persona</h1>
     <p>A financial professional who helps clients achieve their financial goals and create a solid financial plan for their future.</p>
 
+
+//engine
+function generateAnswer(question) {
+  const xhr = new XMLHttpRequest();
+  const url = 'https://api.openai.com/v1/engines/gpt-3.5-turbo/completions';
+  xhr.open('POST', url);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', 'Bearer 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');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        const answer = response.choices[0].text.trim();
+
+        responseDiv.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+        responseDiv.innerHTML += `<p><strong>Bot:</strong> ${answer}</p>`;
+        responseDiv.innerHTML += `<p><strong>Counsel:</strong> ${answer}</p>`;
+        context += '\n' + question + '\n' + answer + '\n';
+        responseDiv.scrollTop = responseDiv.scrollHeight;
+
+        dossier.push({question: question, response: answer});
+        let li = document.createElement("li");
+        li.innerHTML = "<strong>Question:</strong> " + question + "<br><strong>Response:</strong> " + answer;
+        dossierList.appendChild(li);
+      } else {
+        responseDiv.innerHTML += '<p>Back to the show before you go?</p>';
+      }
+      questionInput.value = '';
+      questionInput.focus();
+    }
+  };
+  
+  const data = JSON.stringify({
+    'prompt': `Context: ${context}\nQuestion: ${question}\nAnswer:`,
+    'temperature': 0.7,
+    'max_tokens': 400,
+    'n': 1,
+    'stop': null
+  });
+  
+  xhr.send(data);
+}
+
+
     <h2>Functions:</h2>
     <ul id="functions-list"></ul>
 
